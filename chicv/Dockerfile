@@ -1,5 +1,5 @@
 FROM ubuntu
-
+ENV LANG=C.UTF-8
 RUN useradd chicv -p chicv -s /bin/bash
 MAINTAINER chicv
 ARG DEBIAN_FRONTED=noninteractive
@@ -29,7 +29,7 @@ RUN apt-get install php7.1 php7.1-common  -y --allow-unauthenticated \
 
 ENV ELASTICSEARCH_VERSION 2.4.4
 ENV ELASTICSEARCH_DEB_VERSION 2.4.4
-ENV LANG=C.UTF-8
+
 
 RUN  apt-get install wget -y \
   && wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add - \
