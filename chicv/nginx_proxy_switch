@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+type = $1
+changeNginxConf(){
+        result=`git pull`
+        list=${result}
+        for op in $list
+          do
+            if [ -f $op ] && [ "${op##*.}" = "sql" ]; then
+               echo $op 
+               cat  $op && mysql -f < $op
+            fi
+        done
+}
+
+updateDir $RESRDIR;
+updateDir $ADMINDIR;
