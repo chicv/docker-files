@@ -54,8 +54,8 @@ COPY  startUp.sh  /home/chicv/Cmd/startUp.sh
 COPY  auto-pull.sh  /home/chicv/Cmd/auto-pull.sh
 COPY  jfn.tar.gz  /home/chicv/jfn.tar.gz
 COPY  bashrc  /home/chicv/.bashrc
-COPY ~/.ssh/id_rsa /home/chicv/.ssh/id_rsa
-COPY ~/.ssh/id_rsa.pub /home/chicv/.ssh/id_rsa.pub
+COPY id_rsa /home/chicv/.ssh/id_rsa
+COPY id_rsa.pub /home/chicv/.ssh/id_rsa.pub
 RUN sed -i "s/error_log = \/var\/log\/php7.1-fpm.log/error_log = \/home\/chicv\/logs\/php7-error.log/" /etc/php/7.1/fpm/php-fpm.conf \
     && sed -i "s/user = www-data/user = chicv/" /etc/php/7.1/fpm/pool.d/www.conf \
     && sed -i "s/group = www-data/group = chicv/" /etc/php/7.1/fpm/pool.d/www.conf \
