@@ -58,6 +58,8 @@ COPY id_rsa /home/chicv/.ssh/id_rsa
 COPY id_rsa.pub /home/chicv/.ssh/id_rsa.pub
 RUN sed -i "s/error_log = \/var\/log\/php7.1-fpm.log/error_log = \/home\/chicv\/logs\/php7-error.log/" /etc/php/7.1/fpm/php-fpm.conf \
     && sed -i "s/user = www-data/user = chicv/" /etc/php/7.1/fpm/pool.d/www.conf \
+    && sed -i "s/^error_reporting\s=\sE_ALL\s&\s~E_DEPRECATED\s&\s~E_STRICT$/error_reporting = E_ALL/g" /etc/php/7.1/fpm/php.ini \
+    && sed -i "s/^display_errors = Off$/display_errors = On/g" /etc/php/7.1/fpm/php.ini \
     && sed -i "s/group = www-data/group = chicv/" /etc/php/7.1/fpm/pool.d/www.conf \
     && sed -i "s/listen.owner = www-data/listen.owner = chicv/" /etc/php/7.1/fpm/pool.d/www.conf \
     && sed -i "s/listen.group = www-data/listen.group = chicv/" /etc/php/7.1/fpm/pool.d/www.conf \
