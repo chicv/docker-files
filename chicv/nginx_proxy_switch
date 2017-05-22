@@ -1,17 +1,14 @@
 #!/usr/bin/env bash
 
-type = $1
-changeNginxConf(){
-        result=`git pull`
-        list=${result}
-        for op in $list
-          do
-            if [ -f $op ] && [ "${op##*.}" = "sql" ]; then
-               echo $op 
-               cat  $op && mysql -f < $op
-            fi
-        done
-}
-
-updateDir $RESRDIR;
-updateDir $ADMINDIR;
+NGINX_FILE="/etc/nginx/site-enabel/chicv.conf"
+if [ $1 == "pro" ]; then
+    sed -i  "0,/proxy_pass\ http\:\/\/\$host:933[0-9]\$request_uri/s/proxy_pass\ http\:\/\/\$host:933[0-9]\$request_uri/proxy_pass\ http\:\/\/\$host:9337\$request_uri/" $NGINX_FILE
+else
+    if [ $1 == "local" ];then
+        sed -i  "0,/proxy_pass\ http\:\/\/\$host:933[0-9]\$request_uri/s/proxy_pass\ http\:\/\/\$host:933[0-9]\$request_uri/proxy_pass\ http\:\/\/\$host:9335\$request_uri/" $NGINX_FILE
+    else
+        sed  -i "0,/set\ \$alphaHost\ \"[a-zA-Z0-9]*\"/s/set\ \$alphaHost\ \"[a-zA-Z0-9]*\"/set \$alphaHost\ \"$1\"/" $NGINX_FILE
+        sed -i  "0,/proxy_pass\ http\:\/\/\$host:933[0-9]\$request_uri/s/proxy_pass\ http\:\/\/\$host:933[0-9]\$request_uri/proxy_pass\ http\:\/\/\$host:9336\$request_uri/" $NGINX_FILE
+    fi
+fi
+sudo nginx -s reload
